@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: payments
+          image: hnmishra/payments
+          env:
+            - name: NATS_URL #This is the key that will be used to connect to the nats service and must create a secret for this key
+              value: 'http://nats-srv:4222' #This is the URL of the nats service
+            - name: NATS_CLUSTER_ID #This is the key that will be used to connect to the nats service and must create a secret for this key
+              value: 'ticketing' #This is the cluster id of the nats service
+            - name: NATS_CLIENT_ID #This is the key that will be used to connect to the nats service and must create a secret for this key
+              valueFrom: #This is the client id of the nats service
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MONGO_URI # This is the key that will be used to sign the JWT token in the orders service and must create a secret for this key
+              value: 'mongodb://payments-mongo-srv:27017/payments'
+            - name: JWT_KEY # This is the key that will be used to sign the JWT token in the orders service and must create a secret in k8ds for this key
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: STIPE_KEY # This is the key that will be used to sign the JWT token in the orders service and must create a secret in k8s for this key
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-secret
+                  key: STIPE_KEY
+#          image: us.gcr.io/ticketing-449206/orders
+# ports:
+#   - containerPort: 3000
+# env:
+#   - name: MONGO_URI
+#     value: "your-mongo-uri"
+#   - name: JWT_KEY
+#     value: "your-jwt-key"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-srv
+spec:
+  selector:
+    app: payments
+  ports:
+    - name: payments
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP #This is the default type

@@ -1,0 +1,65 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: ticketing-449206
+  artifacts:
+    - image: hnmishra/auth
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: hnmishra/client
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: hnmishra/tickets
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: hnmishra/orders
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: hnmishra/expiration
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: hnmishra/payments
+      # - image: us.gcr.io/ticketing-449206/auth
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: hnmishra/auth
+          env:
+            - name: MONGO_URI # This is the key that will be used to sign the JWT token in the tickets service and must create a secret for this key
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY # This is the key that will be used to sign the JWT token in the auth service and must create a secret for this key
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+#          image: us.gcr.io/ticketing-449206/auth
+# ports:
+#   - containerPort: 3000
+# env:
+#   - name: MONGO_URI
+#     value: "your-mongo-uri"
+#   - name: JWT_KEY
+#     value: "your-jwt-key"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    app: auth
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP #This is the default type

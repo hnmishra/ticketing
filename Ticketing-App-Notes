@@ -1,0 +1,232 @@
+thisisunsafe
+// @ts-ignore //to ignore the typescript error
+// @ts-nocheck //to ignore the typescript error
+
+run followng command to run ghte gcloud from the VS Code terminal
+Setting up the free google Cloud Account
+https://console.cloud.google.com/products?project=ticketing-449206
+
+create free google account. Login to console
+
+1. create a project with name "ticketing"
+2. Create a Kubernetes->Cluster
+3. Enable Cloud Build
+
+Following are steps
+
+1. Install GC SDK
+2. set the pat with following command to run the gccloud commane
+   $env:Path += ";C:\Users\mishr\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin"
+3. gcloud auth login
+4. gcloud init //create new configuration
+5. Create context to get access to GC cloud container
+   gcloud container clusters get-credentials ticketing-dev --zone us-central1
+6. Update the auth-depl.file file to use GC image
+7. update the skaffold.yaml file
+   8 install the ingress-ngnix on GC
+   goto
+   Check that connected to GC
+   Runn following command to install the ngnix server
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/cloud/deploy.yaml
+   run following command specific to GCE
+   go to https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke and run following command
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/cloud/deploy.yaml4
+8. Above commands install loadbalancer and nginx reverse proxy.
+9. Go to load balance and get the IP
+   and make host entry in the host file C:\Windows\System32\drivers\etc
+   34.27.71.114 ticketing.dev
+10. run the scaffold file with scaffold dev
+11. Check the http://ticket.dev
+
+Imp: \***\*\*\*\*\*** delete the cloud resources after testing
+Context Commands
+
+check wheter the kubernetes context is connected
+kubectl config current-context //returns
+gke_ticketing-449206_us-central1_ticketing-dev //means connected to google
+show the current the k8s context
+kubectl config current-context
+
+Changing the context
+Change to Windows docker-desktop
+kubectl config use-context docker-desktop
+
+Change to GC
+kubectl config use-context gke_ticketing-449206_us-central1_ticketing-dev
+Testing:
+Libraries:
+
+1. jest
+
+npm install --dev-save @types/jest @types/supertest jest ts-jest supertest mongodb-memory-server
+
+--- Next.js front end
+npm init -y
+npm install next react react-dom
+--run skaffodl command
+
+> skaffold dev
+
+**\*\*\***8
+npmjs.com
+https://www.npmjs.com/settings/hnmtickets/members
+public organization is hnmtickets on the npmjs.com
+publish the npm package to the organization
+update the "name": "@hnmtickets/common" in the package.json
+git init
+git add .
+git commit -m "initial commit"
+npm login
+npm publish --access public
+
+Initialize teh Typescript
+tsc --init
+
+Steps to publish a package
+
+---
+
+git add .
+git commit -m "initial commit"
+npm version patch
+npm run build
+npm publish --access public
+
+Project setup
+tsc init
+npm instal typescript
+npm install del-cli
+
+To conver the ts into js we need to change to uncomment and change following settings in the
+tsconfig.json
+"declaration": true,  
+ "outDir": "./build",
+
+**\*** get the pod details and check the verion of the artifacts
+
+kubectl exec -it auth-depl-56f9fd894-st9bc sh
+we will end up in the # prompt
+
+# ls
+
+# cd node_modules
+
+# cd @hnticketing
+
+# cd common
+
+# ls
+
+#cat package.json
+npm run pub
+we can varify the version of the package whther it is latest or not
+
+@@@@@@@@@@@@@@@@
+set up test file
+
+create folder **test** in the root folderv (src/routes/**test**) in src folder we will have code
+create a file in the **test** folder with name of the file to be tested with .test.ts extension
+import the file to be tested
+import { Ticket } from '../ticket';
+import { app } from '../../app';
+import request from 'supertest';  
+import mongoose from 'mongoose';
+run the test with following command
+npm run test
+
+NATS Sreatimg Server (STAN) (Not Just NATS)
+
+---
+
+https://docs.nats.io/
+https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan
+Command Line Options
+https://nats-io.gitbook.io/legacy-nats-docs/nats-streaming-server-aka-stan/stan-nats-streaming-server/configuring/command-line-arguments
+Crate the NAT-deyl.yamal to deploy the NATS Streming Container pod
+kubectl apply -f nats-depl.yaml
+kubectl get pods
+Deploy 2 npm packages 1 to listen and 1 to publish/emit the events
+npm install node-nats-streaming
+mkdir nats-test
+cd nats-test
+npm init -y
+npm install node-nats-streaming typescript @types/node ts-node-dev
+tsc --init
+npm intall -g typescript
+kubectl port-forward nats-depl-654f8c6747-q5f5j 4222:4222
+kubectl port-forward nats-depl-654f8c6747-q5f5j 8222:8222 //for monitoring
+kubectl port-forward <nats pod name> <external ip>:<contaner ip>
+Localhost:8222/streaming
+// to see subscriptions
+http://localhost:8222/streaming/channelsz?subs=1
+
+---
+
+handling concurrency in the Mongo Db
+
+https://www.npmjs.com/package/mongoose-update-if-current
+mongoose-update-if-current
+$ npm install --save mongoose
+$ npm install --save mongoose-update-if-current
+
+-- How to Connect and query the Mongo DB inside pod
+$kubectl exec payments-mongo-depl-6cffdff89c-82hbb -it ./bin/mongosh
+
+//order mongo pod name
+//meke sure bin/mongosh is available in the director where running the command
+
+> shows dbs
+> use orders
+> show collections
+> db.orders.find({})
+
+//update a single record Syntax
+db.collection.updateOne(
+{ \_id: ObjectId("YOUR_DOCUMENT_ID") }, // Filter
+{ $set: { fieldName: "newValue" } } // Update
+);
+
+db.orders.updateOne(
+{ \_id: ObjectId("67c572e1fb91ed1be0644ee4") }, // Filter
+{ $set: { userId: "Maltifa2@br122.com" } } // Update
+);
+
+EXPIRATION
+
+---
+
+PAYMENT SERVICES
+
+---
+
+Using Stripe JS LIBRARY
+https://stripe.com/docs/js/elements/quickstart
+https://stripe.com/docs/api/payment_intents/confirm
+
+install Node Stripe JS SDK
+npm isntall stripe
+
+go to https://dashboard.stripe.com/test/apikeys
+and copy the secret_key
+kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=
+sk_test_51QyW8mP1xwODgLtCl2FAau76vVh10yKwSGqbLSfa7ZTT6OZEbi6nMgEchGT6xBrE1Hdl8aGJ81jsxqhrotGggbxl00velLonro
+IM=
+token="tok_visa" is test token that will alway run with stripe
+
+implement the Stripe Checkout in the React Application
+
+---
+
+react-stripe-checkout
+https://www.npmjs.com/package/react-stripe-checkout
+
+npm install react-stripe-checkout
+npm install prop-types
+
+restart skaffold dev
+
+Testing the Payment - pick the test credit cards from followng site
+
+---
+
+https://docs.stripe.com/testing
