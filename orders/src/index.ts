@@ -7,6 +7,7 @@ import { ExpirationCompleteListener } from "./events/listener/expiration-complet
 import { PaymentCreatedListener } from "./events/listener/payment-created-listener";
 //connect to mongo db
 const start = async () => {
+    console.log('Starting Orders service');
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY must be defined');
     }
