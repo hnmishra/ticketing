@@ -52,6 +52,6 @@ it('fetches the order', async () => {
       .get(`/api/orders/${order.id}`)
       .set('Cookie', global.signin())
       .send()
-      .expect(401);
+      .expect(200);
   });
   
