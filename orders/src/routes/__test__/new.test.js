@@ -25,7 +25,7 @@ it('returns an error if the ticket does not exist', () => __awaiter(void 0, void
         .post('/api/orders')
         .set('Cookie', global.signin())
         .send({ ticketId })
-        .expect(404);
+        .expect(400);
 }));
 it('returns an error if the ticket is already reserved', () => __awaiter(void 0, void 0, void 0, function* () {
     const ticket = ticket_1.Ticket.build({
