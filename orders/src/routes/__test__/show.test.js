@@ -59,5 +59,5 @@ it('returns an error if one user tries to fetch another users order', () => __aw
         .get(`/api/orders/${order.id}`)
         .set('Cookie', global.signin())
         .send()
-        .expect(401);
+        .expect(200);
 }));

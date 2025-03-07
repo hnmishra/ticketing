@@ -230,3 +230,21 @@ Testing the Payment - pick the test credit cards from followng site
 ---
 
 https://docs.stripe.com/testing
+
+CICD
+
+---
+
+git init
+git remote add origin https://github.com/hnmishra/ticketing.git
+git add -all
+git commit -m "Coments"
+git push origin main
+git status
+
+git pull origin main
+
+git reset --hard origin/master
+
+crate a new branch
+git checkout -b dev
