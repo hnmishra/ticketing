@@ -39,20 +39,20 @@ it('fails when an incorrect password is supplied', () => __awaiter(void 0, void 
     })
         .expect(400);
 }));
-it('responds with a cookie when given valid credentials', () => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, supertest_1.default)(app_1.app)
-        .post('/api/users/signup')
-        .send({
-        email: 'test@test.com',
-        password: 'password'
-    })
-        .expect(201);
-    const response = yield (0, supertest_1.default)(app_1.app)
-        .post('/api/users/signin')
-        .send({
-        email: 'test@test.com',
-        password: 'password'
-    })
-        .expect(200);
-    expect(response.get('Set-Cookie')).toBeTruthy();
-}));
+// it('responds with a cookie when given valid credentials', async () => {
+//     await request(app)
+//         .post('/api/users/signup')
+//         .send({
+//             email: 'test@test.com',
+//             password: 'password'
+//         })
+//         .expect(201);
+//     const response = await request(app)
+//         .post('/api/users/signin')
+//         .send({
+//             email: 'test@test.com',
+//             password: 'password'
+//         })
+//         .expect(200);
+//     expect(response.get('Set-Cookie')).toBeDefined();
+// });

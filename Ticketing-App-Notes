@@ -245,3 +245,6 @@ git status
 git pull origin main
 
 git reset --hard origin/master
+
+crate a new branch
+git checkout -b dev
