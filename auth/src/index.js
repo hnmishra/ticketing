@@ -16,17 +16,20 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = require("./app");
 //connect to mongo db
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('Starting up...');
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY must be defined');
     }
+    if (!process.env.MONGO_URI) {
+        throw new Error('MONGO_URI must be defined');
+    }
     try {
-        yield mongoose_1.default.connect('mongodb://auth-mongo-srv:27017/auth');
+        yield mongoose_1.default.connect(process.env.MONGO_URI);
         console.log('Connected to MongoDB');
     }
     catch (err) {
         console.error(err);
     }
-    console.log('Connected Auth to MongoDB');
     app_1.app.listen(3000, () => {
         console.log('Auth service started on port 3000');
     });
