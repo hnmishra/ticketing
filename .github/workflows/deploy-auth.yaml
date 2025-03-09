@@ -20,7 +20,7 @@ jobs:
           - uses: digitalocean/action-doctl@v2
             with:
                 token:  ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          - run: doctl Kubernetes cluster kubeconfig save hnticketing     
+          - run: doctl kubernetes cluster kubeconfig save hnticketing     
           - run: kubectl rollout restart deployment auth-depl
                 
           
