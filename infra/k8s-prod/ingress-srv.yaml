@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: www.networking.k8s.io/v1
+    - host: www.64.225.86.44.nip.io
       http:
         paths:
           - path: /api/users/?(.*)
