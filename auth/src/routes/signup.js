@@ -39,11 +39,12 @@ router.post("/api/users/signup", [
     const userJwt = jsonwebtoken_1.default.sign({
         id: user.id,
         email: user.email,
-    }, process.env.JWT_KEY, { expiresIn: '1h' } // Token expires in 1 hour
+    }, process.env.JWT_KEY, { expiresIn: '24h' } // Token expires in 1 hour
     );
     // store it on session object
     req.session = {
         jwt: userJwt
     };
+    console.log("session in Signup", req.session);
     res.status(201).send(user);
 }));

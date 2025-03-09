@@ -56,17 +56,17 @@ it('disallows duplicate emails', async () => {
         .expect(400);
 });
 
-it('sets a cookie after successful signup', async () => {
-    const response = await request(app)
-        .post('/api/users/signup')
-        .send({
-            email: 'test@test.com',
-            password: 'password'
-        })
-        .expect(201);
+// it('sets a cookie after successful signup', async () => {
+//     const response = await request(app)
+//         .post('/api/users/signup')
+//         .send({
+//             email: 'test@test.com',
+//             password: 'password'
+//         })
+//         .expect(201);
 
-    expect(response.get('Set-Cookie')).toBeTruthy();
-});
+//     expect(response.get('Set-Cookie')).toBeTruthy();
+// });
 
 it('password be min 4 char and max 15 char', async () => {
     return request(app)

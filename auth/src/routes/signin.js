@@ -48,6 +48,6 @@ ruoter.post("/api/users/signin", [
     req.session = {
         jwt: userJwt
     };
-    console.log(req.session);
+    console.log("Sign in succeeded");
     res.status(200).send({ existingUser, message: "Sign in succeeded" });
 }));

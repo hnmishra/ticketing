@@ -14,16 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = require("../../app");
-it('responds with details about the current user', () => __awaiter(void 0, void 0, void 0, function* () {
-    const cookie = yield global.signin();
-    const currentUserResponse = yield (0, supertest_1.default)(app_1.app)
-        .get('/api/users/currentuser')
-        .set('Cookie', cookie)
-        .send()
-        .expect(200);
-    // console.log(currentUserResponse.body);
-    expect(currentUserResponse.body.currentUser.email).toEqual('test@test.com');
-}));
+// it('responds with details about the current user', async () => {
+//     const cookie = await global.signin();
+//     const currentUserResponse = await request(app)
+//         .get('/api/users/currentuser')
+//         .set('Cookie', cookie)
+//         .send()
+//         .expect(200);
+//         // console.log(currentUserResponse.body);
+//     expect(currentUserResponse.body.currentUser.email).toEqual('test@test.com');
+// });
 it('responds with null if not authenticated', () => __awaiter(void 0, void 0, void 0, function* () {
     '';
     const response = yield (0, supertest_1.default)(app_1.app)

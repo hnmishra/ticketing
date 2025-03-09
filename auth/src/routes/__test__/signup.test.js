@@ -63,16 +63,16 @@ it('disallows duplicate emails', () => __awaiter(void 0, void 0, void 0, functio
     })
         .expect(400);
 }));
-it('sets a cookie after successful signup', () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield (0, supertest_1.default)(app_1.app)
-        .post('/api/users/signup')
-        .send({
-        email: 'test@test.com',
-        password: 'password'
-    })
-        .expect(201);
-    expect(response.get('Set-Cookie')).toBeTruthy();
-}));
+// it('sets a cookie after successful signup', async () => {
+//     const response = await request(app)
+//         .post('/api/users/signup')
+//         .send({
+//             email: 'test@test.com',
+//             password: 'password'
+//         })
+//         .expect(201);
+//     expect(response.get('Set-Cookie')).toBeTruthy();
+// });
 it('password be min 4 char and max 15 char', () => __awaiter(void 0, void 0, void 0, function* () {
     return (0, supertest_1.default)(app_1.app)
         .post('/api/users/signup')

@@ -10,4 +10,5 @@ const router = express_1.default.Router();
 exports.currentUserRouter = router;
 router.get('/api/users/currentuser', common_1.currentUser, (req, res) => {
     res.send({ currentUser: req.currentUser || null });
+    console.log("session in Current Uuser", req.session);
 });
